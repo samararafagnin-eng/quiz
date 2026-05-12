@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Diagnóstico Gratuito — Luis Kummer Personal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0a0a0a;
+  --surface:#141414;
+  --card:#1c1c1c;
+  --border:#2e2e2e;
+  --green:#7EE63A;
+  --green-dark:#5ab526;
+  --text:#f5f2ee;
+  --muted:#888;
+  --danger:#ff5f5f;
+  --radius:14px;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Nunito',sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  min-height:100vh;
+}
+
+/* ====== HEADER ====== */
+.header{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:2.5rem 1.25rem 2rem;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.header::after{
+  content:'';
+  position:absolute;
+  bottom:-1px;left:50%;
+  transform:translateX(-50%);
+  width:120px;height:3px;
+  background:var(--green);
+  border-radius:99px;
+}
+.logo-tag{
+  display:inline-block;
+  font-size:0.68rem;
+  font-weight:800;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--green);
+  border:1px solid var(--green);
+  border-radius:4px;
+  padding:3px 10px;
+  margin-bottom:1.25rem;
+}
+.header h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.4rem,8vw,3.6rem);
+  letter-spacing:0.03em;
+  line-height:1;
+  margin-bottom:0.75rem;
+}
+.header h1 span{color:var(--green)}
+.header p{
+  font-size:0.88rem;
+  color:var(--muted);
+  max-width:360px;
+  margin:0 auto;
+  line-height:1.7;
+}
+
+/* ====== PROGRESS ====== */
+.progress-wrap{
+  background:var(--surface);
+  padding:1rem 1.25rem 0.9rem;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.progress-meta{
+  display:flex;
+  justify-content:space-between;
+  font-size:0.72rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+  color:var(--muted);
+  margin-bottom:0.5rem;
+}
+.progress-meta span:last-child{color:var(--green)}
+.bar-bg{
+  height:4px;
+  background:var(--border);
+  border-radius:99px;
+  overflow:hidden;
+}
+.bar-fill{
+  height:100%;
+  background:var(--green);
+  border-radius:99px;
+  transition:width 0.4s cubic-bezier(.4,0,.2,1);
+}
+
+/* ====== CONTAINER ====== */
+.container{
+  max-width:520px;
+  margin:0 auto;
+  padding:1.75rem 1.25rem 4rem;
+}
+
+/* ====== STEP ====== */
+.step{display:none}
+.step.active{display:block;animation:fadeUp 0.35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.step-label{
+  font-size:0.67rem;
+  font-weight:800;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--green);
+  margin-bottom:0.5rem;
+}
+.step h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.6rem,5vw,2rem);
+  letter-spacing:0.04em;
+  line-height:1.15;
+  margin-bottom:0.4rem;
+}
+.step-sub{
+  font-size:0.82rem;
+  color:var(--muted);
+  margin-bottom:1.75rem;
+  line-height:1.6;
+}
+
+/* ====== INPUT ====== */
+.field-wrap{margin-bottom:1.25rem}
+.field-label{
+  font-size:0.78rem;
+  font-weight:700;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  margin-bottom:0.5rem;
+  display:block;
+}
+input[type=text],input[type=number],input[type=tel]{
+  width:100%;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  color:var(--text);
+  font-family:'Nunito',sans-serif;
+  font-size:1rem;
+  font-weight:600;
+  padding:0.85rem 1.1rem;
+  outline:none;
+  transition:border-color 0.2s;
+  -webkit-appearance:none;
+}
+input:focus{border-color:var(--green)}
+input::placeholder{color:var(--muted);font-weight:400}
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+
+/* ====== OPTIONS ====== */
+.opts{display:grid;gap:0.6rem;margin-bottom:1rem}
+.opts.cols2{grid-template-columns:1fr 1fr}
+.opts.cols1{grid-template-columns:1fr}
+
+.opt{
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius);
+  color:var(--text);
+  font-family:'Nunito',sans-serif;
+  font-size:0.9rem;
+  font-weight:600;
+  padding:0.85rem 1rem;
+  cursor:pointer;
+  text-align:left;
+  transition:all 0.18s;
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  line-height:1.3;
+}
+.opt:hover{border-color:var(--green);background:#1f2a14}
+.opt.selected{
+  border-color:var(--green);
+  background:#1f2a14;
+  color:var(--green);
+}
+.opt-icon{
+  width:32px;height:32px;flex-shrink:0;
+  border-radius:8px;
+  background:var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+  transition:background 0.18s;
+}
+.opt.selected .opt-icon{background:var(--green);color:#0a0a0a}
+
+/* ====== CARROSSEL CORPORAL ====== */
+.carousel-wrap{margin-bottom:1.25rem}
+.carousel-frame{
+  position:relative;
+  border-radius:20px;
+  overflow:hidden;
+  border:2px solid var(--border);
+  background:var(--card);
+  aspect-ratio:3/4;
+  max-height:420px;
+  transition:border-color 0.25s;
+  touch-action:pan-y;
+  user-select:none;
+}
+.carousel-frame.selected-frame{border-color:var(--green)}
+.carousel-slides{
+  display:flex;
+  width:100%;
+  height:100%;
+  transition:transform 0.35s cubic-bezier(.4,0,.2,1);
+}
+.carousel-slide{
+  min-width:100%;
+  height:100%;
+  position:relative;
+  flex-shrink:0;
+}
+.carousel-slide svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+.carousel-overlay{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  padding:1.25rem 1rem 1rem;
+  background:linear-gradient(to top,rgba(0,0,0,0.82) 0%,transparent 100%);
+}
+.carousel-tag{
+  display:inline-block;
+  font-size:0.65rem;
+  font-weight:800;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  background:rgba(255,255,255,0.15);
+  color:#fff;
+  border-radius:4px;
+  padding:2px 8px;
+  margin-bottom:0.35rem;
+}
+.carousel-overlay h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.6rem;
+  letter-spacing:0.04em;
+  color:#fff;
+  line-height:1;
+  margin-bottom:0.2rem;
+}
+.carousel-overlay p{
+  font-size:0.8rem;
+  color:rgba(255,255,255,0.7);
+}
+.carousel-hint{
+  position:absolute;
+  top:0.75rem;right:0.75rem;
+  font-size:0.65rem;
+  font-weight:700;
+  letter-spacing:0.08em;
+  color:#fff;
+  background:rgba(0,0,0,0.45);
+  border-radius:20px;
+  padding:4px 10px;
+}
+.carousel-tag-ilustrativa{
+  position:absolute;
+  top:0.75rem;left:0.75rem;
+  font-size:0.62rem;
+  font-weight:700;
+  color:rgba(255,255,255,0.6);
+  background:rgba(0,0,0,0.4);
+  border-radius:20px;
+  padding:3px 9px;
+}
+.carousel-check{
+  position:absolute;
+  top:0.75rem;right:0.75rem;
+  width:28px;height:28px;
+  border-radius:50%;
+  background:var(--green);
+  display:none;
+  align-items:center;justify-content:center;
+  font-size:1rem;
+  color:#0a0a0a;
+  font-weight:900;
+}
+.selected-frame .carousel-check{display:flex}
+.selected-frame .carousel-hint{display:none}
+
+/* slider */
+.carousel-slider-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:0.72rem;
+  font-weight:700;
+  color:var(--muted);
+  margin:0.75rem 0 0.3rem;
+}
+.carousel-slider-wrap{padding:0.25rem 0 0.5rem}
+input[type=range].body-slider{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
+  height:6px;
+  border-radius:99px;
+  background:var(--border);
+  outline:none;
+  cursor:pointer;
+}
+input[type=range].body-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:28px;height:28px;
+  border-radius:50%;
+  background:var(--green);
+  border:3px solid #0a0a0a;
+  cursor:pointer;
+  box-shadow:0 0 0 2px var(--green);
+  transition:transform 0.15s;
+}
+input[type=range].body-slider::-webkit-slider-thumb:active{transform:scale(1.15)}
+.carousel-counter{
+  text-align:center;
+  font-size:0.75rem;
+  font-weight:700;
+  color:var(--muted);
+  margin-top:0.3rem;
+  letter-spacing:0.05em;
+}
+
+/* ====== SCALE ====== */
+.scale-wrap{margin-bottom:1.5rem}
+.scale-row{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:0.4rem;
+}
+.scale-num{
+  font-size:0.72rem;
+  color:var(--muted);
+  font-weight:600;
+}
+.scale-btns{
+  display:flex;
+  gap:4px;
+}
+.scale-btn{
+  flex:1;
+  height:38px;
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:8px;
+  color:var(--muted);
+  font-family:'Nunito',sans-serif;
+  font-size:0.85rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:all 0.15s;
+}
+.scale-btn:hover{border-color:var(--green)}
+.scale-btn.selected{
+  background:var(--green);
+  border-color:var(--green);
+  color:#0a0a0a;
+}
+.scale-labels{
+  display:flex;
+  justify-content:space-between;
+  margin-top:0.35rem;
+}
+.scale-labels span{
+  font-size:0.68rem;
+  color:var(--muted);
+}
+
+/* ====== BUTTONS ====== */
+.btn-next{
+  width:100%;
+  background:var(--green);
+  border:none;
+  border-radius:var(--radius);
+  color:#0a0a0a;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.1rem;
+  letter-spacing:0.12em;
+  padding:1rem;
+  cursor:pointer;
+  transition:all 0.18s;
+  margin-top:1rem;
+}
+.btn-next:hover{background:var(--green-dark);transform:translateY(-1px)}
+.btn-next:disabled{background:var(--border);color:var(--muted);cursor:default;transform:none}
+
+.btn-back{
+  display:block;
+  width:100%;
+  background:none;
+  border:none;
+  color:var(--muted);
+  font-family:'Nunito',sans-serif;
+  font-size:0.8rem;
+  font-weight:600;
+  cursor:pointer;
+  margin-top:0.6rem;
+  padding:0.5rem;
+  text-align:center;
+}
+.btn-back:hover{color:var(--text)}
+
+/* ====== TEASER (pré-whats) ====== */
+.teaser-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.5rem 1.25rem;
+  margin-bottom:1.5rem;
+  position:relative;
+  overflow:hidden;
+}
+.teaser-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:var(--green);
+}
+.teaser-tag{
+  font-size:0.67rem;
+  font-weight:800;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--green);
+  margin-bottom:0.6rem;
+}
+.teaser-card h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.5rem;
+  letter-spacing:0.04em;
+  margin-bottom:0.75rem;
+}
+.teaser-items{list-style:none;margin-bottom:1rem}
+.teaser-items li{
+  font-size:0.85rem;
+  color:var(--muted);
+  padding:0.35rem 0;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.teaser-items li::before{
+  content:'';
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--green);
+  flex-shrink:0;
+}
+.teaser-items li strong{color:var(--text)}
+.teaser-blur{
+  filter:blur(5px);
+  user-select:none;
+  pointer-events:none;
+  color:var(--muted);
+  font-size:0.85rem;
+  padding:0.5rem 0;
+}
+
+.whats-field{
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.25rem;
+  margin-bottom:1rem;
+}
+.whats-field label{
+  font-size:0.78rem;
+  font-weight:700;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  margin-bottom:0.6rem;
+  display:block;
+}
+.phone-row{
+  display:flex;
+  gap:0.5rem;
+  align-items:center;
+}
+.ddi{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--muted);
+  font-family:'Nunito',sans-serif;
+  font-size:0.9rem;
+  font-weight:600;
+  padding:0.8rem 0.75rem;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.phone-row input{flex:1}
+.privacy-note{
+  font-size:0.72rem;
+  color:var(--muted);
+  text-align:center;
+  margin-top:0.4rem;
+}
+
+/* ====== FINAL SCREEN ====== */
+#screen-final{display:none}
+#screen-final.active{display:block;animation:fadeUp 0.4s ease}
+.final-wrap{
+  max-width:520px;
+  margin:0 auto;
+  padding:2rem 1.25rem 5rem;
+  text-align:center;
+}
+.final-icon{
+  width:72px;height:72px;
+  background:#1a2210;
+  border:2px solid var(--green);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.5rem;
+  font-size:2rem;
+}
+.final-wrap h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2rem,7vw,2.6rem);
+  letter-spacing:0.04em;
+  margin-bottom:0.5rem;
+}
+.final-wrap p{
+  font-size:0.88rem;
+  color:var(--muted);
+  line-height:1.7;
+  max-width:340px;
+  margin:0 auto 2rem;
+}
+.btn-whats{
+  display:inline-flex;
+  align-items:center;
+  gap:0.6rem;
+  background:#25D366;
+  border:none;
+  border-radius:var(--radius);
+  color:#fff;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.1rem;
+  letter-spacing:0.1em;
+  padding:1rem 2rem;
+  cursor:pointer;
+  text-decoration:none;
+  transition:all 0.18s;
+  width:100%;
+  justify-content:center;
+}
+.btn-whats:hover{background:#1fb358;transform:translateY(-1px)}
+.btn-whats svg{width:22px;height:22px;flex-shrink:0}
+
+/* ====== ERROR ====== */
+.err{
+  font-size:0.75rem;
+  color:var(--danger);
+  margin-top:0.4rem;
+  display:none;
+}
+.err.show{display:block}
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<div class="header">
+  <div class="logo-tag">Luis Kummer Personal</div>
+  <h1>Seu <span>Diagnóstico</span><br>Corporal Gratuito</h1>
+  <p>Responda algumas perguntas e receba um diagnóstico real sobre onde você está, onde quer chegar e o que fazer para isso.</p>
+</div>
+
+<!-- ========== PROGRESS ========== -->
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-meta">
+    <span id="stepCounter">Pergunta 1 de 14</span>
+    <span id="pctLabel">0%</span>
+  </div>
+  <div class="bar-bg"><div class="bar-fill" id="barFill" style="width:0%"></div></div>
+</div>
+
+<!-- ========== QUIZ ========== -->
+<div id="screen-quiz">
+<div class="container">
+
+<!-- STEP 1: NOME -->
+<div class="step active" id="step-1">
+  <div class="step-label">Olá 👋</div>
+  <h2>Como posso te chamar?</h2>
+  <p class="step-sub">Vamos personalizar seu diagnóstico para você.</p>
+  <div class="field-wrap">
+    <label class="field-label">Seu primeiro nome</label>
+    <input type="text" id="inp-nome" placeholder="Ex: Camila" autocomplete="given-name">
+    <div class="err" id="err-nome">Por favor, escreva seu nome.</div>
+  </div>
+  <button class="btn-next" onclick="nextStep(1)">Continuar →</button>
+</div>
+
+<!-- STEP 2: SEXO -->
+<div class="step" id="step-2">
+  <div class="step-label">Passo 2</div>
+  <h2>Qual é o seu sexo biológico?</h2>
+  <p class="step-sub">Isso influencia os cálculos de composição corporal.</p>
+  <div class="opts cols2">
+    <button class="opt" onclick="selectOpt('sexo','F',this)">
+      <span class="opt-icon">♀</span> Feminino
+    </button>
+    <button class="opt" onclick="selectOpt('sexo','M',this)">
+      <span class="opt-icon">♂</span> Masculino
+    </button>
+  </div>
+  <div class="err" id="err-sexo">Selecione uma opção.</div>
+  <button class="btn-next" onclick="nextStep(2)">Continuar →</button>
+  <button class="btn-back" onclick="prevStep(2)">← Voltar</button>
+</div>
+
+<!-- STEP 3: OBJETIVO PRINCIPAL -->
+<div class="step" id="step-3">
+  <div class="step-label">Passo 3</div>
+  <h2>Qual é o seu principal objetivo?</h2>
+  <p class="step-sub">Escolha o que mais te representa agora.</p>
+  <div class="opts cols1">
+    <button class="opt" onclick="selectOpt('objetivo','emagrecer',this)">
+      <span class="opt-icon">🔥</span>
+      <div><div>Emagrecer e perder gordura</div></div>
+    </button>
+    <button class="opt" onclick="selectOpt('objetivo','definir',this)">
+      <span class="opt-icon">✂</span>
+      <div><div>Definir e tonificar o corpo</div></div>
+    </button>
+    <button class="opt" onclick="selectOpt('objetivo','ganhar_massa',this)">
+      <span class="opt-icon">💪</span>
+      <div><div>Ganhar massa e força</div></div>
+    </button>
+    <button class="opt" onclick="selectOpt('objetivo','saude',this)">
+      <span class="opt-icon">🩺</span>
+      <div><div>Melhorar saúde e disposição</div></div>
+    </button>
+    <button class="opt" onclick="selectOpt('objetivo','pos_parto',this)">
+      <span class="opt-icon">👶</span>
+      <div><div>Recuperação pós-parto</div></div>
+    </button>
+  </div>
+  <div class="err" id="err-objetivo">Selecione uma opção.</div>
+  <button class="btn-next" onclick="nextStep(3)">Continuar →</button>
+  <button class="btn-back" onclick="prevStep(3)">← Voltar</button>
+</div>
+
+<!-- STEP 4: CORPO ATUAL -->
+<div class="step" id="step-4">
+  <div class="step-label">Passo 4</div>
+  <h2>Como você descreveria seu corpo <em>hoje</em>?</h2>
+  <p class="step-sub">Deslize para encontrar a opção mais próxima da sua realidade.</p>
+  <div class="carousel-wrap">
+    <div class="carousel-frame" id="frame-atual">
+      <div class="carousel-slides" id="slides-atual"></div>
+      <div class="carousel-tag-ilustrativa">Imagem ilustrativa</div>
+      <div class="carousel-hint">← deslize →</div>
+      <div class="carousel-check">✓</div>
+    </div>
+    <div class="carousel-slider-row">
+      <span id="label-esq-atual"></span>
+      <span id="label-dir-atual"></span>
+    </div>
+    <div class="carousel-slider-wrap">
+      <input type="range" class="body-slider" id="slider-atual" min="0" max="4" step="1" value="0" oninput="onSlider('atual',this.value)" ontouchstart="" >
+    </div>
+    <div class="carousel-counter" id="counter-atual">1 de 5</div>
+  </div>
+  <div class="err" id="err-corpo-atual">Deslize e confirme sua escolha.</div>
+  <button class="btn-next" id="btn-confirma-atual" onclick="confirmarCarrossel('atual',4)" style="background:var(--border);color:var(--muted)">Este é meu corpo hoje →</button>
+  <button class="btn-back" onclick="prevStep(4)">← Voltar</button>
+</div>
+
+<!-- STEP 5: CORPO OBJETIVO -->
+<div class="step" id="step-5">
+  <div class="step-label">Passo 5</div>
+  <h2>Como você quer que seu corpo fique?</h2>
+  <p class="step-sub">Deslize até encontrar o corpo que você quer conquistar.</p>
+  <div class="carousel-wrap">
+    <div class="carousel-frame" id="frame-obj">
+      <div class="carousel-slides" id="slides-obj"></div>
+      <div class="carousel-tag-ilustrativa">Imagem ilustrativa</div>
+      <div class="carousel-hint">← deslize →</div>
+      <div class="carousel-check">✓</div>
+    </div>
+    <div class="carousel-slider-row">
+      <span id="label-esq-obj"></span>
+      <span id="label-dir-obj"></span>
+    </div>
+    <div class="carousel-slider-wrap">
+      <input type="range" class="body-slider" id="slider-obj" min="0" max="4" step="1" value="0" oninput="onSlider('obj',this.value)" ontouchstart="">
+    </div>
+    <div class="carousel-counter" id="counter-obj">1 de 5</div>
+  </div>
+  <div class="err" id="err-corpo-obj">Deslize e confirme sua escolha.</div>
+  <button class="btn-next" id="btn-confirma-obj" onclick="confirmarCarrossel('obj',5)" style="background:var(--border);color:var(--muted)">Este é meu objetivo →</button>
+  <button class="btn-back" onclick="prevStep(5)">← Voltar</button>
+</div>
+
+<!-- STEP 6: PARTE QUE INCOMODA -->
+<div class="step" id="step-6">
+  <div class="step-label">Passo 6</div>
+  <h2>Qual parte do corpo mais te incomoda?</h2>
+  <p class="step-sub">Pode ser mais de uma.</p>
+  <div class="opts cols2" id="opts-parte">
+    <button class="opt multi" onclick="toggleMulti('parte','barriga',this)"><span class="opt-icon">🫃</span>Barriga</button>
+    <button class="opt multi" onclick="toggleMulti('parte','coxas',this)"><span class="opt-icon">🦵</span>Coxas</button>
+    <button class="opt multi" onclick="toggleMulti('parte','braco',this)"><span class="opt-icon">💪</span>Braços</button>
+    <button class="opt multi" onclick="toggleMulti('parte','gluteo',this)"><span class="opt-icon">🍑</span>Glúteos</button>
+    <button class="opt multi" onclick="toggleMulti('parte','costas',this)"><span class="opt-icon">🔙</span>Costas</button>
+    <button class="opt multi" onclick="toggleMulti('parte','corpo_todo',this)"><span class="opt-icon">🏃</span>Corpo todo</button>
+  </div>
+  <div class="err" id="err-parte">Selecione ao menos uma opção.</div>
+  <button class="btn-next" onclick="nextStep(6)">Continuar →</button>
+  <button class="btn-back" onclick="prevStep(6)">← Voltar</button>
+</div>
+
+<!-- STEP 7: BEM ESTAR -->
+<div class="step" id="step-7">
+  <div class="step-label">Passo 7</div>
+  <h2>Como você se sente com o seu corpo hoje?</h2>
+  <p class="step-sub">Seja honesta — isso nos ajuda a entender onde você está de verdade.</p>
+  <div class="scale-wrap">
+    <div class="scale-btns" id="scale-bemestar">
+      <button class="scale-btn" onclick="selectScale('bemestar','1',this)">1</button>
+      <button class="scale-btn" onclick="selectScale('bemestar','2',this)">2</button>
+      <button class="scale-btn" onclick="selectScale('bemestar','3',this)">3</button>
+      <button class="scale-btn" onclick="selectScale('bemestar','4',this)">4</button>
+      <button class="scale-btn" onclick="selectScale('bemestar','5',this)">5</button>
+      <button class="scale-btn" onclick="selectScale('bemestar','6',this)">6</button>
+      <button class="scale-btn" onclick="selectScale('bemestar','7',this)">7</button>
+      <button class="scale-btn" onclick="selectScale('bemestar','8',this)">8</button>
+      <button class="scale-btn" onclick="selectScale('bemestar','9',this)">9</button>
+      <button class="scale-btn" onclick="selectScale('bemestar','10',this)">10</button>
+    </div>
+    <div class="scale-labels">
+      <span>😔 Muito mal</span>
+      <span>😊 Muito bem</span>
+    </div>
+  </div>
+  <div class="err" id="err-bemestar">Selecione sua nota.</div>
+  <button class="btn-next" onclick="nextStep(7)">Continuar →</button>
+  <button class="btn-back" onclick="prevStep(7)">← Voltar</button>
+</div>
+
+<!-- STEP 8: DADOS FÍSICOS -->
+<div class="step" id="step-8">
+  <div class="step-label">Passo 8</div>
+  <h2>Seus dados físicos</h2>
+  <p class="step-sub">Usados para calcular seu IMC e calorias ideais.</p>
+  <div class="field-wrap">
+    <label class="field-label">Peso atual (kg)</label>
+    <input type="number" id="inp-peso" placeholder="Ex: 72" min="30" max="250">
+    <div class="err" id="err-peso">Informe seu peso.</div>
+  </div>
+  <div class="field-wrap">
+    <label class="field-label">Altura (cm)</label>
+    <input type="number" id="inp-altura" placeholder="Ex: 165" min="100" max="220">
+    <div class="err" id="err-altura">Informe sua altura.</div>
+  </div>
+  <div class="field-wrap">
+    <label class="field-label">Idade</label>
+    <input type="number" id="inp-idade" placeholder="Ex: 32" min="16" max="80">
+    <div class="err" id="err-idade">Informe sua idade.</div>
+  </div>
+  <div class="field-wrap">
+    <label class="field-label">Peso objetivo (kg) — opcional</label>
+    <input type="number" id="inp-peso-obj" placeholder="Ex: 60" min="30" max="250">
+  </div>
+  <button class="btn-next" onclick="nextStep(8)">Continuar →</button>
+  <button class="btn-back" onclick="prevStep(8)">← Voltar</button>
+</div>
+
+<!-- STEP 9: LIMITAÇÕES -->
+<div class="step" id="step-9">
+  <div class="step-label">Passo 9</div>
+  <h2>Você tem alguma limitação física?</h2>
+  <p class="step-sub">Problemas ósseos, articulares, lesões ou restrições médicas. Pode marcar mais de uma.</p>
+  <div class="opts cols1">
+    <button class="opt multi" onclick="toggleMulti('limitacao','nao',this,'limitacao')">
+      <span class="opt-icon">✅</span> Não tenho nenhuma limitação
+    </button>
+    <button class="opt multi" onclick="toggleMulti('limitacao','coluna',this,'limitacao')">
+      <span class="opt-icon">🦴</span> Problema na coluna / hérnia
+    </button>
+    <button class="opt multi" onclick="toggleMulti('limitacao','joelho',this,'limitacao')">
+      <span class="opt-icon">🦵</span> Joelho / tornozelo
+    </button>
+    <button class="opt multi" onclick="toggleMulti('limitacao','ombro',this,'limitacao')">
+      <span class="opt-icon">💪</span> Ombro / braço
+    </button>
+    <button class="opt multi" onclick="toggleMulti('limitacao','quadril',this,'limitacao')">
+      <span class="opt-icon">🦴</span> Quadril / ciática
+    </button>
+  </div>
+  <div class="field-wrap" style="margin-top:0.75rem">
+    <label class="field-label">Outra limitação? Descreva aqui (opcional)</label>
+    <input type="text" id="inp-limitacao-outro" placeholder="Ex: tendinite no punho, cirurgia recente...">
+  </div>
+  <div class="err" id="err-limitacao">Selecione ao menos uma opção.</div>
+  <button class="btn-next" onclick="nextStep(9)">Continuar →</button>
+  <button class="btn-back" onclick="prevStep(9)">← Voltar</button>
+</div>
+
+<!-- STEP 10: MEDICAMENTOS -->
+<div class="step" id="step-10">
+  <div class="step-label">Passo 10</div>
+  <h2>Você usa algum medicamento?</h2>
+  <p class="step-sub">Alguns remédios afetam o metabolismo e o treino.</p>
+  <div class="opts cols1">
+    <button class="opt" onclick="selectOpt('medicamento','nao',this)">
+      <span class="opt-icon">✅</span> Não uso medicamentos
+    </button>
+    <button class="opt" onclick="selectOpt('medicamento','pressao',this)">
+      <span class="opt-icon">💊</span> Pressão / coração
+    </button>
+    <button class="opt" onclick="selectOpt('medicamento','diabetes',this)">
+      <span class="opt-icon">💉</span> Diabetes / glicemia
+    </button>
+    <button class="opt" onclick="selectOpt('medicamento','tireoide',this)">
+      <span class="opt-icon">🦋</span> Tireoide (hipotireoidismo etc.)
+    </button>
+    <button class="opt" onclick="selectOpt('medicamento','antidepressivo',this)">
+      <span class="opt-icon">🧠</span> Antidepressivo / ansiedade
+    </button>
+    <button class="opt" onclick="selectOpt('medicamento','mounjaro',this)">
+      <span class="opt-icon">💉</span> Mounjaro / emagrecedor injetável
+    </button>
+    <button class="opt" onclick="selectOpt('medicamento','outro',this)">
+      <span class="opt-icon">💊</span> Outro
+    </button>
+  </div>
+  <div class="err" id="err-medicamento">Selecione uma opção.</div>
+  <button class="btn-next" onclick="nextStep(10)">Continuar →</button>
+  <button class="btn-back" onclick="prevStep(10)">← Voltar</button>
+</div>
+
+<!-- STEP 11: EXERCÍCIO -->
+<div class="step" id="step-11">
+  <div class="step-label">Passo 11</div>
+  <h2>Você já se exercita?</h2>
+  <p class="step-sub">Sua rotina atual de atividade física.</p>
+  <div class="opts cols1">
+    <button class="opt" onclick="selectOpt('exercicio','nao',this)">
+      <span class="opt-icon">😴</span> Não pratico nada atualmente
+    </button>
+    <button class="opt" onclick="selectOpt('exercicio','1x',this)">
+      <span class="opt-icon">🚶</span> Sim, 1–2x por semana
+    </button>
+    <button class="opt" onclick="selectOpt('exercicio','3x',this)">
+      <span class="opt-icon">🏋</span> Sim, 3–4x por semana
+    </button>
+    <button class="opt" onclick="selectOpt('exercicio','5x',this)">
+      <span class="opt-icon">🔥</span> Sim, 5x ou mais por semana
+    </button>
+  </div>
+  <div class="err" id="err-exercicio">Selecione uma opção.</div>
+  <button class="btn-next" onclick="nextStep(11)">Continuar →</button>
+  <button class="btn-back" onclick="prevStep(11)">← Voltar</button>
+</div>
+
+<!-- STEP 12: ALIMENTAÇÃO -->
+<div class="step" id="step-12">
+  <div class="step-label">Passo 12</div>
+  <h2>Como está sua alimentação hoje?</h2>
+  <p class="step-sub">Seja honesta — não existe resposta certa ou errada aqui.</p>
+  <div class="opts cols1">
+    <button class="opt" onclick="selectOpt('alimentacao','muito_ruim',this)">
+      <span class="opt-icon">🍔</span> Muito irregular, como muita besteira
+    </button>
+    <button class="opt" onclick="selectOpt('alimentacao','ruim',this)">
+      <span class="opt-icon">🍕</span> Sei que preciso melhorar
+    </button>
+    <button class="opt" onclick="selectOpt('alimentacao','media',this)">
+      <span class="opt-icon">🥗</span> Razoável, tento me cuidar
+    </button>
+    <button class="opt" onclick="selectOpt('alimentacao','boa',this)">
+      <span class="opt-icon">✅</span> Boa, sigo uma rotina alimentar
+    </button>
+  </div>
+  <div class="err" id="err-alimentacao">Selecione uma opção.</div>
+  <button class="btn-next" onclick="nextStep(12)">Continuar →</button>
+  <button class="btn-back" onclick="prevStep(12)">← Voltar</button>
+</div>
+
+<!-- STEP 13: OBSTÁCULO -->
+<div class="step" id="step-13">
+  <div class="step-label">Passo 13</div>
+  <h2>Qual é o seu maior obstáculo?</h2>
+  <p class="step-sub">O que mais te impede de atingir seus objetivos hoje.</p>
+  <div class="opts cols1">
+    <button class="opt" onclick="selectOpt('obstaculo','tempo',this)">
+      <span class="opt-icon">⏰</span> Falta de tempo
+    </button>
+    <button class="opt" onclick="selectOpt('obstaculo','motivacao',this)">
+      <span class="opt-icon">😔</span> Falta de motivação / constância
+    </button>
+    <button class="opt" onclick="selectOpt('obstaculo','orientacao',this)">
+      <span class="opt-icon">🧭</span> Não sei por onde começar
+    </button>
+    <button class="opt" onclick="selectOpt('obstaculo','alimentacao',this)">
+      <span class="opt-icon">🍽</span> Dificuldade com alimentação
+    </button>
+    <button class="opt" onclick="selectOpt('obstaculo','dinheiro',this)">
+      <span class="opt-icon">💰</span> Investimento / custo
+    </button>
+    <button class="opt" onclick="selectOpt('obstaculo','saude',this)">
+      <span class="opt-icon">🩺</span> Questões de saúde
+    </button>
+  </div>
+  <div class="err" id="err-obstaculo">Selecione uma opção.</div>
+  <button class="btn-next" onclick="nextStep(13)">Continuar →</button>
+  <button class="btn-back" onclick="prevStep(13)">← Voltar</button>
+</div>
+
+<!-- STEP 14: COMPROMETIMENTO -->
+<div class="step" id="step-14">
+  <div class="step-label">Passo 14 — Última pergunta!</div>
+  <h2>Qual é o seu nível de comprometimento?</h2>
+  <p class="step-sub">O quanto você está disposta a se dedicar para mudar seu corpo?</p>
+  <div class="scale-wrap">
+    <div class="scale-btns" id="scale-compromisso">
+      <button class="scale-btn" onclick="selectScale('compromisso','1',this)">1</button>
+      <button class="scale-btn" onclick="selectScale('compromisso','2',this)">2</button>
+      <button class="scale-btn" onclick="selectScale('compromisso','3',this)">3</button>
+      <button class="scale-btn" onclick="selectScale('compromisso','4',this)">4</button>
+      <button class="scale-btn" onclick="selectScale('compromisso','5',this)">5</button>
+      <button class="scale-btn" onclick="selectScale('compromisso','6',this)">6</button>
+      <button class="scale-btn" onclick="selectScale('compromisso','7',this)">7</button>
+      <button class="scale-btn" onclick="selectScale('compromisso','8',this)">8</button>
+      <button class="scale-btn" onclick="selectScale('compromisso','9',this)">9</button>
+      <button class="scale-btn" onclick="selectScale('compromisso','10',this)">10</button>
+    </div>
+    <div class="scale-labels">
+      <span>😐 Pouco</span>
+      <span>🔥 Total</span>
+    </div>
+  </div>
+  <div class="err" id="err-compromisso">Selecione sua nota.</div>
+
+  <!-- TEASER DO RESULTADO -->
+  <div class="teaser-card" style="margin-top:2rem">
+    <div class="teaser-tag">🎯 Seu diagnóstico está pronto</div>
+    <h3>O que você vai receber:</h3>
+    <ul class="teaser-items">
+      <li><strong>Perfil corporal atual</strong> com IMC e estimativa de gordura</li>
+      <li><strong>Calorias ideais</strong> para o seu objetivo</li>
+      <li><strong>Plano personalizado</strong> de onde está e como chegar lá</li>
+      <li><strong>Análise dos seus obstáculos</strong> com estratégia específica</li>
+    </ul>
+    <div class="teaser-blur">IMC: ██ · Gordura estimada: ██% · TDEE: ████ kcal</div>
+  </div>
+
+  <!-- NÚMERO DE CELULAR -->
+  <div class="whats-field">
+    <label>Informe seu celular para receber o diagnóstico</label>
+    <div class="phone-row">
+      <div class="ddi">🇧🇷 +55</div>
+      <input type="tel" id="inp-tel" placeholder="(11) 99999-9999" maxlength="15" oninput="maskPhone(this)">
+    </div>
+    <div class="err" id="err-tel">Informe um número válido com DDD.</div>
+    <p class="privacy-note">Seus dados estão seguros. Não compartilhamos com terceiros.</p>
+  </div>
+
+  <button class="btn-next" onclick="finalizarQuiz()" style="background:#25D366;font-size:1rem">
+    📲 Receber meu diagnóstico no WhatsApp
+  </button>
+  <button class="btn-back" onclick="prevStep(14)">← Voltar</button>
+</div>
+
+</div><!-- /container -->
+</div><!-- /screen-quiz -->
+
+<!-- ========== TELA FINAL ========== -->
+<div id="screen-final">
+  <div class="final-wrap">
+    <div class="final-icon">✅</div>
+    <h2>Diagnóstico enviado!</h2>
+    <p>Clique no botão abaixo para abrir o WhatsApp e receber seu resultado completo com a nossa equipe.</p>
+    <a href="#" id="btn-whats-final" class="btn-whats" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      Abrir WhatsApp agora
+    </a>
+    <p style="margin-top:1rem;font-size:0.75rem;color:var(--muted)">Nossa equipe responde em até algumas horas durante o horário comercial.</p>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const answers = {};
+const multiAnswers = { parte: [], limitacao: [] };
+const TOTAL_STEPS = 14;
+let currentStep = 1;
+
+// ============================================================
+// CARROSSEL CORPORAL — SVG ilustrativo por perfil
+// ============================================================
+
+// Paleta de tons de pele/corpo para cada perfil
+const PERFIS_FEM = [
+  { key:'atletica',   label:'Ativa / Atlética',    sub:'Muito definida, pouca gordura',   pct:'~15-20%', cor1:'#d4a574', cor2:'#c49060', cintura:18, quadril:30, belly:0,  ombro:24, perna:14 },
+  { key:'normal',     label:'Normal',               sub:'Peso saudável, levemente definida',pct:'~21-25%', cor1:'#c8956c', cor2:'#b07850', cintura:22, quadril:34, belly:2,  ombro:25, perna:16 },
+  { key:'leve',       label:'Levemente acima',      sub:'Pequeno excesso de gordura',      pct:'~26-30%', cor1:'#c08060', cor2:'#a86840', cintura:27, quadril:38, belly:6,  ombro:26, perna:18 },
+  { key:'moderada',   label:'Moderadamente acima',  sub:'Excesso visível de gordura',      pct:'~31-36%', cor1:'#b87050', cor2:'#9a5838', cintura:33, quadril:44, belly:12, ombro:27, perna:21 },
+  { key:'bastante',   label:'Bastante acima',        sub:'Bastante acima do peso',          pct:'>37%',    cor1:'#b06040', cor2:'#904828', cintura:40, quadril:52, belly:20, ombro:28, perna:24 },
+];
+const PERFIS_MASC = [
+  { key:'atletico',   label:'Atlético / Definido',  sub:'Muito definido, pouca gordura',   pct:'~8-14%',  cor1:'#c08060', cor2:'#a06840', cintura:24, ombro:38, belly:0,  perna:14 },
+  { key:'normal',     label:'Normal',               sub:'Peso saudável',                   pct:'~15-20%', cor1:'#b87050', cor2:'#986040', cintura:28, ombro:38, belly:3,  perna:16 },
+  { key:'leve',       label:'Levemente acima',      sub:'Leve barriga visível',             pct:'~21-26%', cor1:'#b06040', cor2:'#904828', cintura:34, ombro:39, belly:9,  perna:18 },
+  { key:'moderado',   label:'Moderadamente acima',  sub:'Barriga proeminente',              pct:'~27-33%', cor1:'#a85838', cor2:'#884030', cintura:42, ombro:40, belly:16, perna:20 },
+  { key:'bastante',   label:'Bastante acima',        sub:'Bastante acima do peso',          pct:'>34%',    cor1:'#a05030', cor2:'#804028', cintura:50, ombro:42, belly:24, perna:23 },
+];
+
+function svgPerfilFem(p){
+  const c=p.cor1, s=p.cor2;
+  const cint=p.cintura, quad=p.quadril, bel=p.belly, omb=p.ombro, pna=p.perna;
+  const cx=60;
+  return `<svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg${p.key}" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#2a3a1a"/>
+      <stop offset="100%" stop-color="#0d1a0a"/>
+    </radialGradient>
+  </defs>
+  <rect width="120" height="200" fill="url(#bg${p.key})"/>
+  <!-- cabelo -->
+  <ellipse cx="${cx}" cy="28" rx="18" ry="22" fill="#3d2a1a"/>
+  <!-- cabeça -->
+  <ellipse cx="${cx}" cy="30" rx="14" ry="15" fill="${c}"/>
+  <!-- pescoço -->
+  <rect x="${cx-5}" y="43" width="10" height="8" fill="${c}"/>
+  <!-- tronco: ombros arredondados + cintura + quadril -->
+  <path d="M${cx-omb},52 Q${cx-omb-3},70 ${cx-cint/2},88 Q${cx-quad/2},106 ${cx-quad/2+2},118 L${cx+quad/2-2},118 Q${cx+quad/2},106 ${cx+cint/2},88 Q${cx+omb+3},70 ${cx+omb},52 Z" fill="${c}"/>
+  <!-- barriga extra -->
+  ${bel>0?`<ellipse cx="${cx}" cy="${80+bel/2}" rx="${bel*0.9}" ry="${bel*0.7}" fill="${s}" opacity="0.55"/>`:''}
+  <!-- seios -->
+  <ellipse cx="${cx-7}" cy="65" rx="7" ry="5.5" fill="${s}" opacity="0.6"/>
+  <ellipse cx="${cx+7}" cy="65" rx="7" ry="5.5" fill="${s}" opacity="0.6"/>
+  <!-- braço esq -->
+  <path d="M${cx-omb},54 Q${cx-omb-10},80 ${cx-omb-8},108" stroke="${c}" stroke-width="${8+pna/4}" stroke-linecap="round" fill="none"/>
+  <!-- braço dir -->
+  <path d="M${cx+omb},54 Q${cx+omb+10},80 ${cx+omb+8},108" stroke="${c}" stroke-width="${8+pna/4}" stroke-linecap="round" fill="none"/>
+  <!-- perna esq -->
+  <path d="M${cx-quad/2+4},118 Q${cx-pna-4},145 ${cx-pna-2},178" stroke="${c}" stroke-width="${pna+2}" stroke-linecap="round" fill="none"/>
+  <!-- perna dir -->
+  <path d="M${cx+quad/2-4},118 Q${cx+pna+4},145 ${cx+pna+2},178" stroke="${c}" stroke-width="${pna+2}" stroke-linecap="round" fill="none"/>
+  <!-- roupa: top -->
+  <path d="M${cx-omb+2},56 Q${cx-omb},68 ${cx-10},76 L${cx+10},76 Q${cx+omb},68 ${cx+omb-2},56 Z" fill="#1a1a2e" opacity="0.7"/>
+  <!-- roupa: calcinha -->
+  <path d="M${cx-quad/2+2},104 Q${cx-cint/2+2},112 ${cx},116 Q${cx+cint/2-2},112 ${cx+quad/2-2},104 Z" fill="#1a1a2e" opacity="0.7"/>
+</svg>`;
+}
+
+function svgPerfilMasc(p){
+  const c=p.cor1, s=p.cor2;
+  const cint=p.cintura, omb=p.ombro, bel=p.belly, pna=p.perna;
+  const cx=60;
+  return `<svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg${p.key}" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1a2a3a"/>
+      <stop offset="100%" stop-color="#0a1020"/>
+    </radialGradient>
+  </defs>
+  <rect width="120" height="200" fill="url(#bg${p.key})"/>
+  <!-- cabelo curto -->
+  <ellipse cx="${cx}" cy="24" rx="14" ry="9" fill="#2a1a0a"/>
+  <!-- cabeça -->
+  <ellipse cx="${cx}" cy="30" rx="13" ry="14" fill="${c}"/>
+  <!-- pescoço -->
+  <rect x="${cx-5}" y="42" width="10" height="8" fill="${c}"/>
+  <!-- tronco trapezoidal -->
+  <path d="M${cx-omb},52 Q${cx-omb},72 ${cx-cint/2},92 L${cx-cint/2},112 L${cx+cint/2},112 L${cx+cint/2},92 Q${cx+omb},72 ${cx+omb},52 Z" fill="${c}"/>
+  <!-- barriga -->
+  ${bel>0?`<ellipse cx="${cx}" cy="${82+bel/2}" rx="${bel}" ry="${bel*0.7}" fill="${s}" opacity="0.5"/>`:''}
+  <!-- peitoral -->
+  <ellipse cx="${cx-8}" cy="65" rx="9" ry="6" fill="${s}" opacity="0.35"/>
+  <ellipse cx="${cx+8}" cy="65" rx="9" ry="6" fill="${s}" opacity="0.35"/>
+  <!-- braço esq -->
+  <path d="M${cx-omb},54 Q${cx-omb-12},78 ${cx-omb-10},110" stroke="${c}" stroke-width="${10+pna/4}" stroke-linecap="round" fill="none"/>
+  <!-- braço dir -->
+  <path d="M${cx+omb},54 Q${cx+omb+12},78 ${cx+omb+10},110" stroke="${c}" stroke-width="${10+pna/4}" stroke-linecap="round" fill="none"/>
+  <!-- perna esq -->
+  <path d="M${cx-cint/2+2},112 Q${cx-pna-4},142 ${cx-pna-2},180" stroke="${c}" stroke-width="${pna+4}" stroke-linecap="round" fill="none"/>
+  <!-- perna dir -->
+  <path d="M${cx+cint/2-2},112 Q${cx+pna+4},142 ${cx+pna+2},180" stroke="${c}" stroke-width="${pna+4}" stroke-linecap="round" fill="none"/>
+  <!-- camiseta -->
+  <path d="M${cx-omb+2},54 L${cx-omb+1},112 L${cx+omb-1},112 L${cx+omb-2},54 Z" fill="#0a1a2e" opacity="0.55"/>
+  <!-- bermuda -->
+  <path d="M${cx-cint/2},112 L${cx-cint/2-2},140 L${cx},138 L${cx+cint/2+2},140 L${cx+cint/2},112 Z" fill="#0a1020" opacity="0.6"/>
+</svg>`;
+}
+
+// Estado dos carrosseis
+const carState = {
+  atual: { idx:0, confirmed:false },
+  obj:   { idx:0, confirmed:false },
+};
+
+function getPerfis(){ return (answers.sexo==='M') ? PERFIS_MASC : PERFIS_FEM; }
+function getSvg(p){ return (answers.sexo==='M') ? svgPerfilMasc(p) : svgPerfilFem(p); }
+
+function buildCarrossel(which){
+  const perfis = getPerfis();
+  const total = perfis.length;
+  const slidesEl = document.getElementById('slides-'+which);
+  const sliderEl = document.getElementById('slider-'+which);
+  const counterEl = document.getElementById('counter-'+which);
+  const labelEsq = document.getElementById('label-esq-'+which);
+  const labelDir = document.getElementById('label-dir-'+which);
+  const state = carState[which];
+
+  sliderEl.max = total - 1;
+  labelEsq.textContent = perfis[0].label;
+  labelDir.textContent = perfis[total-1].label;
+
+  slidesEl.innerHTML = perfis.map(p => `
+    <div class="carousel-slide">
+      ${getSvg(p)}
+      <div class="carousel-overlay">
+        <div class="carousel-tag">${p.pct} gordura</div>
+        <h3>${p.label}</h3>
+        <p>${p.sub}</p>
+      </div>
+    </div>
+  `).join('');
+
+  // Touch/swipe
+  let touchStartX=0;
+  const frame = document.getElementById('frame-'+which);
+  frame.addEventListener('touchstart', e=>{ touchStartX=e.touches[0].clientX; },{passive:true});
+  frame.addEventListener('touchend', e=>{
+    const dx = touchStartX - e.changedTouches[0].clientX;
+    if(Math.abs(dx)>30){
+      const newIdx = Math.max(0, Math.min(total-1, state.idx + (dx>0?1:-1)));
+      sliderEl.value = newIdx;
+      onSlider(which, newIdx);
+    }
+  },{passive:true});
+
+  counterEl.textContent = '1 de '+total;
+  goToSlide(which, state.idx, false);
+}
+
+function onSlider(which, val){
+  const idx = parseInt(val);
+  carState[which].idx = idx;
+  carState[which].confirmed = false;
+  document.getElementById('frame-'+which).classList.remove('selected-frame');
+  const perfis = getPerfis();
+  const btn = document.getElementById('btn-confirma-'+which);
+  btn.style.background='var(--border)';
+  btn.style.color='var(--muted)';
+  goToSlide(which, idx, true);
+  document.getElementById('counter-'+which).textContent = (idx+1)+' de '+perfis.length;
+}
+
+function goToSlide(which, idx, animate){
+  const slides = document.getElementById('slides-'+which);
+  slides.style.transition = animate ? 'transform 0.35s cubic-bezier(.4,0,.2,1)' : 'none';
+  slides.style.transform = 'translateX(-'+idx*100+'%)';
+}
+
+function confirmarCarrossel(which, stepNum){
+  const perfis = getPerfis();
+  const idx = carState[which].idx;
+  const p = perfis[idx];
+  const key = which==='atual' ? 'corpo_atual' : 'corpo_obj';
+  answers[key] = p.key;
+  carState[which].confirmed = true;
+  document.getElementById('frame-'+which).classList.add('selected-frame');
+  const btn = document.getElementById('btn-confirma-'+which);
+  btn.style.background='var(--green)';
+  btn.style.color='#0a0a0a';
+  document.getElementById('err-corpo-'+(which==='atual'?'atual':'obj')).classList.remove('show');
+  setTimeout(()=>nextStep(stepNum), 350);
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showStep(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  const el = document.getElementById('step-'+n);
+  if(el) el.classList.add('active');
+  currentStep = n;
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  if(n===4) buildCarrossel('atual');
+  if(n===5) buildCarrossel('obj');
+}
+
+function nextStep(from){
+  if(!validateStep(from)) return;
+  if(from < TOTAL_STEPS) showStep(from+1);
+}
+
+function prevStep(from){
+  if(from > 1) showStep(from-1);
+}
+
+function updateProgress(){
+  const answeredCount = Object.keys(answers).length + (multiAnswers.parte.length>0?1:0) + (multiAnswers.limitacao.length>0?1:0);
+  const filled = Math.min(answeredCount, TOTAL_STEPS);
+  const pct = Math.round((currentStep-1)/TOTAL_STEPS*100);
+  document.getElementById('barFill').style.width = pct+'%';
+  document.getElementById('stepCounter').textContent = 'Pergunta '+currentStep+' de '+TOTAL_STEPS;
+  document.getElementById('pctLabel').textContent = pct+'%';
+}
+
+// ============================================================
+// INPUT HELPERS
+// ============================================================
+function selectOpt(key, val, el){
+  answers[key] = val;
+  el.closest('.opts').querySelectorAll('.opt').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  const errId = 'err-'+key;
+  const errEl = document.getElementById(errId);
+  if(errEl) errEl.classList.remove('show');
+}
+
+function toggleMulti(key, val, el, group){
+  const arr = multiAnswers[key];
+  // Se clicou em "nao", limpa tudo e seleciona só ele
+  if(val==='nao'){
+    arr.length=0;
+    el.closest('.opts').querySelectorAll('.opt').forEach(b=>b.classList.remove('selected'));
+    arr.push('nao');
+    el.classList.add('selected');
+  } else {
+    // Se tinha "nao" selecionado, remove
+    const naoIdx=arr.indexOf('nao');
+    if(naoIdx>-1){
+      arr.splice(naoIdx,1);
+      el.closest('.opts').querySelectorAll('.opt').forEach(b=>{
+        if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'nao'")) b.classList.remove('selected');
+      });
+    }
+    const idx = arr.indexOf(val);
+    if(idx>-1){ arr.splice(idx,1); el.classList.remove('selected'); }
+    else { arr.push(val); el.classList.add('selected'); }
+  }
+  const errEl = document.getElementById('err-'+key);
+  if(errEl) errEl.classList.remove('show');
+}
+
+function selectScale(key, val, el){
+  answers[key] = val;
+  el.closest('.scale-btns').querySelectorAll('.scale-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('err-'+key).classList.remove('show');
+}
+
+function maskPhone(input){
+  let v = input.value.replace(/\D/g,'');
+  if(v.length>11) v=v.slice(0,11);
+  if(v.length<=2) v=v.replace(/(\d{0,2})/,'($1');
+  else if(v.length<=7) v=v.replace(/(\d{2})(\d{0,5})/,'($1) $2');
+  else v=v.replace(/(\d{2})(\d{5})(\d{0,4})/,'($1) $2-$3');
+  input.value=v;
+}
+
+// ============================================================
+// VALIDATION
+// ============================================================
+function validateStep(n){
+  let ok = true;
+  const show = (id)=>{ const e=document.getElementById(id); if(e) e.classList.add('show'); ok=false; };
+
+  if(n===1){ if(!document.getElementById('inp-nome').value.trim()) show('err-nome'); }
+  if(n===2){ if(!answers.sexo) show('err-sexo'); }
+  if(n===3){ if(!answers.objetivo) show('err-objetivo'); }
+  if(n===4){ if(!answers.corpo_atual) show('err-corpo-atual'); }
+  if(n===5){ if(!answers.corpo_obj) show('err-corpo-obj'); }
+  if(n===6){ if(!multiAnswers.parte.length) show('err-parte'); }
+  if(n===7){ if(!answers.bemestar) show('err-bemestar'); }
+  if(n===8){
+    const p=document.getElementById('inp-peso').value;
+    const h=document.getElementById('inp-altura').value;
+    const i=document.getElementById('inp-idade').value;
+    if(!p||p<30||p>250) show('err-peso');
+    if(!h||h<100||h>220) show('err-altura');
+    if(!i||i<16||i>80) show('err-idade');
+  }
+  if(n===9){ if(!multiAnswers.limitacao.length) show('err-limitacao'); }
+  if(n===10){ if(!answers.medicamento) show('err-medicamento'); }
+  if(n===11){ if(!answers.exercicio) show('err-exercicio'); }
+  if(n===12){ if(!answers.alimentacao) show('err-alimentacao'); }
+  if(n===13){ if(!answers.obstaculo) show('err-obstaculo'); }
+  return ok;
+}
+
+// ============================================================
+// FINALIZAR
+// ============================================================
+function finalizarQuiz(){
+  if(!answers.compromisso){ document.getElementById('err-compromisso').classList.add('show'); return; }
+  const tel = document.getElementById('inp-tel').value.replace(/\D/g,'');
+  if(tel.length < 10){ document.getElementById('err-tel').classList.add('show'); return; }
+
+  const nome = document.getElementById('inp-nome').value.trim();
+  const peso = document.getElementById('inp-peso').value;
+  const altura = document.getElementById('inp-altura').value;
+  const idade = document.getElementById('inp-idade').value;
+  const pesoObj = document.getElementById('inp-peso-obj').value;
+
+  // Cálculos
+  const imc = peso && altura ? (peso / ((altura/100)**2)).toFixed(1) : null;
+  let imcFrase = '';
+  if(imc){
+    if(imc<18.5) imcFrase='abaixo do peso';
+    else if(imc<25) imcFrase='peso normal';
+    else if(imc<30) imcFrase='sobrepeso';
+    else imcFrase='obesidade';
+  }
+
+  // Labels amigáveis
+  const objLabel = {emagrecer:'emagrecer e perder gordura',definir:'definir e tonificar',ganhar_massa:'ganhar massa',saude:'melhorar saúde',pos_parto:'recuperação pós-parto'}[answers.objetivo]||answers.objetivo;
+  const exLabel = {nao:'não pratica exercícios','1x':'treina 1-2x/semana','3x':'treina 3-4x/semana','5x':'treina 5x ou mais/semana'}[answers.exercicio]||answers.exercicio;
+  const alimentLabel = {muito_ruim:'alimentação muito irregular',ruim:'precisa melhorar a alimentação',media:'alimentação razoável',boa:'boa alimentação'}[answers.alimentacao]||answers.alimentacao;
+  const obstLabel = {tempo:'falta de tempo',motivacao:'falta de motivação',orientacao:'não sabe por onde começar',alimentacao:'dificuldade com alimentação',dinheiro:'questão de investimento',saude:'questões de saúde'}[answers.obstaculo]||answers.obstaculo;
+  const limitacaoLabels = {nao:'nenhuma',coluna:'coluna/hérnia',joelho:'joelho/tornozelo',ombro:'ombro/braço',quadril:'quadril/ciática'};
+  const limitacoes = multiAnswers.limitacao.map(l=>limitacaoLabels[l]||l).join(', ');
+  const limitacaoOutro = document.getElementById('inp-limitacao-outro').value.trim();
+  const limitacaoFinal = limitacaoOutro ? limitacoes + (limitacoes?', ':'')+limitacaoOutro : limitacoes;
+
+  const medLabel = {nao:'nenhum',pressao:'pressão/coração',diabetes:'diabetes/glicemia',tireoide:'tireoide',antidepressivo:'antidepressivo/ansiedade',mounjaro:'Mounjaro/emagrecedor injetável',outro:'outro'}[answers.medicamento]||answers.medicamento;
+  const partes = multiAnswers.parte.join(', ');
+
+  let msg = `Olá! Acabei de preencher o diagnóstico corporal do @luis_kummer_ 🏋️‍♀️
+
+*Meu perfil:*
+• Nome: ${nome}
+• Objetivo principal: ${objLabel}
+• Sexo: ${answers.sexo==='F'?'Feminino':'Masculino'}
+• Corpo atual: ${answers.corpo_atual} | Objetivo: ${answers.corpo_obj}
+• Parte que mais incomoda: ${partes}
+• Bem-estar com o corpo: ${answers.bemestar}/10
+• Peso: ${peso}kg | Altura: ${altura}cm | Idade: ${idade} anos${pesoObj?` | Peso objetivo: ${pesoObj}kg`:''}${imc?`\n• IMC calculado: ${imc} (${imcFrase})`:''}
+• Limitação física: ${limitacaoFinal}
+• Medicamentos: ${medLabel}
+• Exercícios: ${exLabel}
+• Alimentação: ${alimentLabel}
+• Maior obstáculo: ${obstLabel}
+• Comprometimento: ${answers.compromisso}/10
+
+Quero receber meu diagnóstico completo! 💪`;
+
+  const whatsNum = '5544999999999'; // ← SUBSTITUA PELO NÚMERO DA LARA
+  const url = 'https://wa.me/'+whatsNum+'?text='+encodeURIComponent(msg);
+
+  document.getElementById('btn-whats-final').href = url;
+  document.getElementById('screen-quiz').style.display = 'none';
+  document.getElementById('progressWrap').style.display = 'none';
+  document.getElementById('screen-final').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  // Abre o whats automaticamente
+  setTimeout(()=>{ window.open(url,'_blank'); }, 600);
+}
+</script>
+</body>
+</html>
